@@ -1,0 +1,66 @@
+﻿  cbuf.c
+  collection.c
+  glue.c
+  nskeyedarchive.c
+  opack.c
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\opack.c(195): warning C4244: “函数”: 从“uint64_t”转换到“unsigned int”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\opack.c(232): warning C4244: “函数”: 从“uint64_t”转换到“unsigned int”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\opack.c(192): warning C4244: “初始化”: 从“uint64_t”转换到“uint8_t”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\opack.c(229): warning C4244: “初始化”: 从“uint64_t”转换到“uint8_t”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\opack.c(278): warning C4244: “函数”: 从“time_t”转换到“int32_t”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\opack.c(338): warning C4244: “=”: 从“uint64_t”转换到“size_t”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\opack.c(373): warning C4244: “=”: 从“uint64_t”转换到“size_t”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\opack.c(276): warning C4244: “初始化”: 从“double”转换到“uint32_t”，可能丢失数据
+  sha1.c
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(26): warning C4142: "uint32_t": 类型的良性重定义
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(23): note: 参见“uint32_t”的声明
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(37): warning C4142: "int32_t": 类型的良性重定义
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(19): note: 参见“int32_t”的声明
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(69): warning C4005: “UINT64_C”: 宏重定义
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(125): note: 参见“UINT64_C”的前一个定义
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(70): warning C4005: “INT64_C”: 宏重定义
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(120): note: 参见“INT64_C”的前一个定义
+  sha256.c
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(26): warning C4142: "uint32_t": 类型的良性重定义
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(23): note: 参见“uint32_t”的声明
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(37): warning C4142: "int32_t": 类型的良性重定义
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(19): note: 参见“int32_t”的声明
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(69): warning C4005: “UINT64_C”: 宏重定义
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(125): note: 参见“UINT64_C”的前一个定义
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(70): warning C4005: “INT64_C”: 宏重定义
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(120): note: 参见“INT64_C”的前一个定义
+  sha512.c
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(19): warning C4142: "int32_t": 类型的良性重定义
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(37): note: 参见“int32_t”的声明
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(23): warning C4142: "uint32_t": 类型的良性重定义
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(26): note: 参见“uint32_t”的声明
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(120): warning C4005: “INT64_C”: 宏重定义
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(70): note: 参见“INT64_C”的前一个定义
+c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\stdint.h(125): warning C4005: “UINT64_C”: 宏重定义
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\fixedint.h(69): note: 参见“UINT64_C”的前一个定义
+  socket.c
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(139): warning C4133: “函数”: 从“char *”到“LPWSTR”的类型不兼容
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(515): warning C4477: “fprintf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 2 拥有了类型“WCHAR *”
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(515): note: 请考虑在格式字符串中使用“%ls”
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(515): note: 请考虑在格式字符串中使用“%lls”
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(515): note: 请考虑在格式字符串中使用“%Ls”
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(515): note: 请考虑在格式字符串中使用“%ws”
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(1232): warning C4477: “fprintf”: 格式字符串“%s”需要类型“char *”的参数，但可变参数 2 拥有了类型“WCHAR *”
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(1232): note: 请考虑在格式字符串中使用“%ls”
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(1232): note: 请考虑在格式字符串中使用“%lls”
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(1232): note: 请考虑在格式字符串中使用“%Ls”
+  g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\socket.c(1232): note: 请考虑在格式字符串中使用“%ws”
+  termcolors.c
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\termcolors.c(191): warning C4129: “e”: 不可识别的字符转义序列
+  thread.c
+  tlv.c
+  utils.c
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\utils.c(245): warning C4244: “函数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\utils.c(286): warning C4244: “函数”: 从“uint64_t”转换到“size_t”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\utils.c(294): warning C4244: “函数”: 从“uint64_t”转换到“size_t”，可能丢失数据
+g:\libimobiledevice-vs\libimobiledevice-glue\libimobiledevice-glue\src\utils.c(311): warning C4244: “函数”: 从“uint64_t”转换到“size_t”，可能丢失数据
+    正在创建库 G:\libimobiledevice-vs\Release\libimobiledevice-glue.lib 和对象 G:\libimobiledevice-vs\Release\libimobiledevice-glue.exp
+  正在生成代码
+  All 149 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  libimobiledevice-glue.vcxproj -> G:\libimobiledevice-vs\Release\libimobiledevice-glue.dll

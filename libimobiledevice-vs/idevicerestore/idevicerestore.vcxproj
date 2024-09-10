@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\polyfill\libgen.h" />
+    <ClInclude Include="idevicerestore\src\ace3.h" />
+    <ClInclude Include="idevicerestore\src\asr.h" />
+    <ClInclude Include="idevicerestore\src\common.h" />
+    <ClInclude Include="idevicerestore\src\dfu.h" />
+    <ClInclude Include="idevicerestore\src\download.h" />
+    <ClInclude Include="idevicerestore\src\endianness.h" />
+    <ClInclude Include="idevicerestore\src\fdr.h" />
+    <ClInclude Include="idevicerestore\src\fls.h" />
+    <ClInclude Include="idevicerestore\src\ftab.h" />
+    <ClInclude Include="idevicerestore\src\getopt.h" />
+    <ClInclude Include="idevicerestore\src\idevicerestore.h" />
+    <ClInclude Include="idevicerestore\src\img3.h" />
+    <ClInclude Include="idevicerestore\src\img4.h" />
+    <ClInclude Include="idevicerestore\src\ipsw.h" />
+    <ClInclude Include="idevicerestore\src\limera1n.h" />
+    <ClInclude Include="idevicerestore\src\limera1n_payload.h" />
+    <ClInclude Include="idevicerestore\src\locking.h" />
+    <ClInclude Include="idevicerestore\src\mbn.h" />
+    <ClInclude Include="idevicerestore\src\normal.h" />
+    <ClInclude Include="idevicerestore\src\recovery.h" />
+    <ClInclude Include="idevicerestore\src\restore.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\polyfill\libgen.c" />
+    <ClCompile Include="idevicerestore\src\ace3.c" />
+    <ClCompile Include="idevicerestore\src\asr.c" />
+    <ClCompile Include="idevicerestore\src\common.c" />
+    <ClCompile Include="idevicerestore\src\dfu.c" />
+    <ClCompile Include="idevicerestore\src\download.c" />
+    <ClCompile Include="idevicerestore\src\fdr.c" />
+    <ClCompile Include="idevicerestore\src\fls.c" />
+    <ClCompile Include="idevicerestore\src\ftab.c" />
+    <ClCompile Include="idevicerestore\src\getopt.c" />
+    <ClCompile Include="idevicerestore\src\idevicerestore.c" />
+    <ClCompile Include="idevicerestore\src\img3.c" />
+    <ClCompile Include="idevicerestore\src\img4.c" />
+    <ClCompile Include="idevicerestore\src\ipsw.c" />
+    <ClCompile Include="idevicerestore\src\limera1n.c" />
+    <ClCompile Include="idevicerestore\src\locking.c" />
+    <ClCompile Include="idevicerestore\src\mbn.c" />
+    <ClCompile Include="idevicerestore\src\normal.c" />
+    <ClCompile Include="idevicerestore\src\recovery.c" />
+    <ClCompile Include="idevicerestore\src\restore.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libimobiledevice-glue\libimobiledevice-glue.vcxproj">
+      <Project>{39f8b336-0b78-4ec4-b0b3-07989f5f4799}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libimobiledevice\libimobiledevice.vcxproj">
+      <Project>{c3a724c7-8e99-4a5b-8c77-661e21cf96bd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libirecovery\libirecovery.vcxproj">
+      <Project>{9369ce71-17fd-42a1-97cd-6cfa28832eb0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libplist\libplist.vcxproj">
+      <Project>{657f771c-21ee-4ae6-b0ab-208bae34ba43}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libtatsu\libtatsu.vcxproj">
+      <Project>{8147f782-226c-4049-8f4a-39b1afc3f2cb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\libusbmuxd\libusbmuxd.vcxproj">
+      <Project>{9f25725c-feeb-4388-9748-0e152c9ce242}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{1308408C-5676-4A80-A226-612E174D66B1}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>idevicerestore</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)libplist\libplist\include;$(SolutionDir)libusbmuxd\libusbmuxd\include;$(SolutionDir)libimobiledevice\libimobiledevice\include;$(SolutionDir)libirecovery\libirecovery\include;$(SolutionDir)idevicerestore\idevicerestore\src;$(SolutionDir)libimobiledevice-glue\libimobiledevice-glue\include;$(SolutionDir)polyfill;$(SolutionDir)libtatsu\libtatsu\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;IDEVICERESTORE_EXPORTS;_WINDOWS;_USRDLL;HAVE_REVERSE_PROXY;HAVE_CONFIG_H;HAVE_REALPATH;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>../packages/libzip_x86-windows/include;../packages/zlib_x86-windows/include;../packages/curl_x86-windows/include;../packages/dirent_x86-windows/include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>../packages/curl_x86-windows/lib;../packages/libzip_x86-windows/lib;../packages/zlib_x86-windows/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl.lib;zlib.lib;zip.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;IDEVICERESTORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;IDEVICERESTORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;IDEVICERESTORE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableUAC>false</EnableUAC>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

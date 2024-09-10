@@ -1,0 +1,28 @@
+Package: libzip
+Version: 1.10.1
+Depends: vcpkg-cmake:x64-windows, vcpkg-cmake-config:x64-windows, zlib
+Architecture: x86-windows
+Multi-Arch: same
+Abi: 85069ab671f4f8de3c7962d8ee49fdb4a015d1712804e055938d502bf04b4a33
+Description: A library for reading, creating, and modifying zip archives.
+Default-Features: bzip2, default-aes
+
+Package: libzip
+Feature: bzip2
+Depends: bzip2
+Architecture: x86-windows
+Multi-Arch: same
+Description: Support bzip2-compressed zip archives
+
+Package: libzip
+Feature: default-aes
+Depends: libzip
+Architecture: x86-windows
+Multi-Arch: same
+Description: Use default AES
+
+Package: libzip
+Feature: wincrypto
+Architecture: x86-windows
+Multi-Arch: same
+Description: AES (encryption) support using Windows Crypto API
