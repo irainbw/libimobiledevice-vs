@@ -4176,7 +4176,7 @@ static int _restore_send_file_data(struct _restore_send_file_data_ctx* rctx, voi
 			info("NOTE: No URLAsset requested, assuming it is not necessary.");
 		}
 		else if (err == PROPERTY_LIST_SERVICE_E_SUCCESS) {
-			+restore_send_url_asset(rctx->client, message);
+			restore_send_url_asset(rctx->client, message);
 		}
 	}
 
