@@ -1,9 +1,0 @@
-﻿  tss.c
-g:\libimobiledevice-vs\libtatsu\libtatsu\src\tss.c(99): warning C4244: “函数”: 从“time_t”转换到“unsigned int”，可能丢失数据
-    正在创建库 G:\libimobiledevice-vs\Release\libtatsu.lib 和对象 G:\libimobiledevice-vs\Release\libtatsu.exp
-  正在生成代码
-  1 of 45 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  已完成代码的生成
-  libtatsu.vcxproj -> G:\libimobiledevice-vs\Release\libtatsu.dll
