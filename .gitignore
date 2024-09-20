@@ -1,1 +1,8 @@
 .vs/
+libimobiledevice-vs/idevicerestore/Release/
+libimobiledevice-vs/libimobiledevice/Release/
+libimobiledevice-vs/libimobiledevice-glue/Release/
+libimobiledevice-vs/libirecovery/Release/
+libimobiledevice-vs/libplist/Release/
+libimobiledevice-vs/libtatsu/Release/
+libimobiledevice-vs/libusbmuxd/Release/
