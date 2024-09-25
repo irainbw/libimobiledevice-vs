@@ -2335,6 +2335,11 @@ static void* _irecv_handle_device_add(void *userdata)
 
 	if (product_id == KIS_PRODUCT_ID) {
 		client = (irecv_client_t)malloc(sizeof(struct irecv_client_private));
+		if (client == NULL) {
+			debug("%s: Failed to allocate memory\n", __func__);
+			return NULL;
+		}
+		memset(client, '\0', sizeof(struct irecv_client_private));
 		client->handle = CreateFileA(result, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_FLAG_OVERLAPPED, NULL);
 		if (client->handle == INVALID_HANDLE_VALUE) {
 			debug("%s: Failed to open device path %s\n", __func__, result);
@@ -2392,8 +2397,15 @@ static void* _irecv_handle_device_add(void *userdata)
 
 	if (product_id == KIS_PRODUCT_ID) {
 		IOObjectRetain(device);
-
-		error = iokit_usb_open_service(&client, device);
+		int i = 0;
+		for (i = 0; i < 10; i++) {
+			error = iokit_usb_open_service(&client, device);
+			if (error == IRECV_E_SUCCESS) {
+				break;
+			}
+			debug("%s: Could not open KIS device, retrying...\n", __func__);
+			usleep(500000);
+		}
 		if (error != IRECV_E_SUCCESS) {
 			debug("%s: ERROR: could not open KIS device!\n", __func__);
 			return NULL;
@@ -2453,14 +2465,29 @@ static void* _irecv_handle_device_add(void *userdata)
 #endif /* !WIN32 */
 	memset(&client_loc, '\0', sizeof(client_loc));
 	if (product_id == KIS_PRODUCT_ID) {
-		error = irecv_usb_set_configuration(client, 1);
+		int i = 0;
+		for (i = 0; i < 10; i++) {
+			error = irecv_usb_set_configuration(client, 1);
+			if (error == IRECV_E_SUCCESS) {
+				break;
+			}
+			debug("Failed to set configuration, error %d, retrying...\n", error);
+			usleep(500000);
+		}
 		if (error != IRECV_E_SUCCESS) {
 			debug("Failed to set configuration, error %d\n", error);
 			irecv_close(client);
 			return NULL;
 		}
 
-		error = irecv_usb_set_interface(client, 0, 0);
+		for (i = 0; i < 10; i++) {
+			error = irecv_usb_set_interface(client, 0, 0);
+			if (error == IRECV_E_SUCCESS) {
+				break;
+			}
+			debug("Failed to set interface, error %d, retrying...\n", error);
+			usleep(500000);
+		}
 		if (error != IRECV_E_SUCCESS) {
 			debug("Failed to set interface, error %d\n", error);
 			irecv_close(client);
@@ -2518,7 +2545,7 @@ static void _irecv_handle_device_remove(struct irecv_usb_device_info *devinfo)
 {
 	irecv_device_event_t dev_event;
 	dev_event.type = IRECV_DEVICE_REMOVE;
-	dev_event.mode = 0;
+	dev_event.mode = devinfo->mode;
 	dev_event.device_info = &(devinfo->device_info);
 	mutex_lock(&listener_mutex);
 	FOREACH(struct irecv_device_event_context* context, &listeners) {
