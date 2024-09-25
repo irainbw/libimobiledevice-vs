@@ -834,8 +834,9 @@ int idevicerestore_start(struct idevicerestore_client_t* client)
 			}
 			return -2;
 		}
+		dfu_client_free(client);
 		debug("Waiting for device to reconnect in DFU mode...\n");
-		cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 5000);
+		cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 20000);
 		if (client->mode != MODE_DFU || (client->flags & FLAG_QUIT)) {
 			mutex_unlock(&client->device_event_mutex);
 			if (!(client->flags & FLAG_QUIT)) {
@@ -1288,6 +1289,16 @@ int idevicerestore_start(struct idevicerestore_client_t* client)
 				if (get_recoveryos_root_ticket_tss_response(client, build_identity, &client->tss_recoveryos_root_ticket) < 0) {
 					error("ERROR: Unable to get SHSH blobs for this device (recovery OS Root Ticket)\n");
 					return -1;
+				}
+			} else {
+				plist_t recovery_variant = plist_access_path(build_identity, 2, "Info", "RecoveryVariant");
+				if (recovery_variant) {
+					const char* recovery_variant_str = plist_get_string_ptr(recovery_variant, NULL);
+					plist_t recovery_build_identity = build_manifest_get_build_identity_for_model_with_variant(client->build_manifest, client->device->hardware_model, recovery_variant_str, 1);
+					if (get_tss_response(client, recovery_build_identity, &client->tss_recoveryos_root_ticket) < 0) {
+						error("ERROR: Unable to get SHSH blobs for this device (%s)\n", recovery_variant_str);
+						return -1;
+					}
 				}
 			}
 		}
