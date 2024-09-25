@@ -61,6 +61,8 @@
 #ifndef sleep
 #define sleep(n) Sleep(1000 * n)
 #endif
+#define __usleep(x) Sleep(x/1000)
+#define usleep(x) Sleep(x/1000)
 #endif
 #endif
 #ifdef _MSC_VER
@@ -3729,7 +3731,7 @@ irecv_error_t irecv_trigger_limera1n_exploit(irecv_client_t client)
 	case kIOReturnNoDevice:	       return IRECV_E_NO_DEVICE;
 	default:
 		return IRECV_E_UNKNOWN_ERROR;
-}
+	}
 #else
 	irecv_usb_control_transfer(client, 0x21, 2, 0, 0, NULL, 0, USB_TIMEOUT);
 #endif
