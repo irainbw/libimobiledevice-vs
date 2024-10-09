@@ -1025,11 +1025,6 @@ static int32_t _sockaddr_in6_scope_id(struct sockaddr_in6* addr)
 				res = addr_in->sin6_scope_id;
 				break;
 			}
-
-			if ((addr_in->sin6_scope_id > addr->sin6_scope_id) && (res >= 0)) {
-				// use last valid scope id as we're past the requested scope id
-				break;
-			}
 			res = addr_in->sin6_scope_id;
 			continue;
 		}
@@ -1037,11 +1032,6 @@ static int32_t _sockaddr_in6_scope_id(struct sockaddr_in6* addr)
 		/* skip loopback interface if not already matched exactly above */
 		if ((ifa->ifa_flags & IFF_LOOPBACK) != 0) {
 			continue;
-		}
-
-		if ((addr_in->sin6_scope_id > addr->sin6_scope_id) && (res >= 0)) {
-			// use last valid scope id as we're past the requested scope id
-			break;
 		}
 
 		res = addr_in->sin6_scope_id;
