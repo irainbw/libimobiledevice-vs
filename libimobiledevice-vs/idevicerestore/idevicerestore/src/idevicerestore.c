@@ -1290,8 +1290,7 @@ int idevicerestore_start(struct idevicerestore_client_t* client)
 					error("ERROR: Unable to get SHSH blobs for this device (recovery OS Root Ticket)\n");
 					return -1;
 				}
-			}
-			else {
+			} else {
 				plist_t recovery_variant = plist_access_path(build_identity, 2, "Info", "RecoveryVariant");
 				if (recovery_variant) {
 					const char* recovery_variant_str = plist_get_string_ptr(recovery_variant, NULL);
@@ -1345,7 +1344,7 @@ int idevicerestore_start(struct idevicerestore_client_t* client)
 					strcpy(zfn, "shsh");
 				}
 				mkdir_with_parents(zfn, 0755);
-				snprintf(&zfn[0] + strlen(zfn), sizeof(zfn) - strlen(zfn), "/%" PRIu64 "-%s-%s.shsh", client->ecid, client->device->product_type, client->version);
+				snprintf(&zfn[0]+strlen(zfn), sizeof(zfn)-strlen(zfn), "/%" PRIu64 "-%s-%s.shsh", client->ecid, client->device->product_type, client->version);
 				struct stat fst;
 				if (stat(zfn, &fst) != 0) {
 					gzFile zf = gzopen(zfn, "wb");
@@ -1454,6 +1453,7 @@ int idevicerestore_start(struct idevicerestore_client_t* client)
 			}
 			return -2;
 		}
+		recovery_client_free(client);
 		debug("Waiting for device to reconnect in recovery mode...\n");
 		cond_wait_timeout(&client->device_event_cond, &client->device_event_mutex, 60000);
 		if (client->mode != MODE_RECOVERY || (client->flags & FLAG_QUIT)) {
@@ -1531,7 +1531,11 @@ int idevicerestore_start(struct idevicerestore_client_t* client)
 		if (client->mode != MODE_RESTORE || (client->flags & FLAG_QUIT)) {
 			mutex_unlock(&client->device_event_mutex);
 			error("ERROR: Device failed to enter restore mode.\n");
-			error("Please make sure that usbmuxd is running.\n");
+			if (client->mode == MODE_UNKNOWN) {
+				error("Make sure that usbmuxd is running.\n");
+			} else if (client->mode == MODE_RECOVERY) {
+				error("Device reconnected in recovery mode, most likely image personalization failed.\n");
+			}
 			return -1;
 		}
 		mutex_unlock(&client->device_event_mutex);
@@ -1809,9 +1813,9 @@ int main(int argc, char* argv[]) {
 				if (!p || *(p + 1) == '\0') {
 					// no path component, add default path
 					const char default_path[] = "/TSS/controller?action=2";
-					size_t usize = strlen(optarg) + sizeof(default_path);
+					size_t usize = strlen(optarg)+sizeof(default_path);
 					char* newurl = malloc(usize);
-					snprintf(newurl, usize, "%s%s", optarg, (p) ? default_path + 1 : default_path);
+					snprintf(newurl, usize, "%s%s", optarg, (p) ? default_path+1 : default_path);
 					client->tss_url = newurl;
 				}
 				else {
@@ -2263,8 +2267,7 @@ int get_tss_response(struct idevicerestore_client_t* client, plist_t build_ident
 		if (client->version) {
 			if (client->cache_dir) {
 				snprintf(zfn, sizeof(zfn), "%s/shsh/%" PRIu64 "-%s-%s.shsh", client->cache_dir, client->ecid, client->device->product_type, client->version);
-			}
-			else {
+			} else {
 				snprintf(zfn, sizeof(zfn), "shsh/%" PRIu64 "-%s-%s.shsh", client->ecid, client->device->product_type, client->version);
 			}
 			struct stat fst;
