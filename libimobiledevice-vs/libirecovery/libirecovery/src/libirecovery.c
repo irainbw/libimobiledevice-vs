@@ -84,6 +84,33 @@
 
 #include "libirecovery.h"
 
+// Reference: https://stackoverflow.com/a/2390626/1806760
+// Initializer/finalizer sample for MSVC and GCC/Clang.
+// 2010-2016 Joe Lowe. Released into the public domain.
+
+#ifdef __cplusplus
+    #define INITIALIZER(f) \
+        static void f(void); \
+        struct f##_t_ { f##_t_(void) { f(); } }; static f##_t_ f##_; \
+        static void f(void)
+#elif defined(_MSC_VER)
+    #pragma section(".CRT$XCU",read)
+    #define INITIALIZER2_(f,p) \
+        static void f(void); \
+        __declspec(allocate(".CRT$XCU")) void (*f##_)(void) = f; \
+        __pragma(comment(linker,"/include:" p #f "_")) \
+        static void f(void)
+    #ifdef _WIN64
+        #define INITIALIZER(f) INITIALIZER2_(f,"")
+    #else
+        #define INITIALIZER(f) INITIALIZER2_(f,"_")
+    #endif
+#else
+    #define INITIALIZER(f) \
+        static void f(void) __attribute__((__constructor__)); \
+        static void f(void)
+#endif
+
 struct irecv_client_private {
 	int debug;
 	int usb_config;
@@ -204,6 +231,7 @@ static struct irecv_device irecv_devices[] = {
 	{ "iPhone17,2",	 "d94ap",    0x0E, 0x8140, "iPhone 16 Pro Max" },
 	{ "iPhone17,3",	 "d47ap",    0x08, 0x8140, "iPhone 16" },
 	{ "iPhone17,4",	 "d48ap",    0x0A, 0x8140, "iPhone 16 Plus" },
+	{ "iPhone17,5",	 "v59ap",    0x04, 0x8140, "iPhone 16e" },
 	/* iPod */
 	{ "iPod1,1",     "n45ap",    0x02, 0x8900, "iPod Touch (1st gen)" },
 	{ "iPod2,1",     "n72ap",    0x00, 0x8720, "iPod Touch (2nd gen)" },
@@ -300,6 +328,8 @@ static struct irecv_device irecv_devices[] = {
 	{ "iPad14,9",    "j508ap",   0x12, 0x8112, "iPad Air 11-inch (M2, Cellular)" },
 	{ "iPad14,10",   "j537ap",   0x14, 0x8112, "iPad Air 13-inch (M2, WiFi)" },
 	{ "iPad14,11",   "j538ap",   0x16, 0x8112, "iPad Air 13-inch (M2, Cellular)" },
+	{ "iPad16,1",    "j410ap",   0x08, 0x8130, "iPad mini (A17 Pro, WiFi)" },
+	{ "iPad16,2",    "j411ap",   0x0A, 0x8130, "iPad mini (A17 Pro, Cellular)" },
 	{ "iPad16,3",    "j717ap",   0x08, 0x8132, "iPad Pro 11-inch (M4, WiFi)" },
 	{ "iPad16,4",    "j718ap",   0x0A, 0x8132, "iPad Pro 11-inch (M4, Cellular)" },
 	{ "iPad16,5",    "j720ap",   0x0C, 0x8132, "iPad Pro 13-inch (M4, WiFi)" },
@@ -402,6 +432,15 @@ static struct irecv_device irecv_devices[] = {
 	{ "Mac15,11",       "j516map", 0x46, 0x6034, "MacBook Pro (16-inch, M3 Max, Nov 2023)" },
 	{ "Mac15,12",       "j613ap",  0x30, 0x8122, "MacBook Air (13-inch, M3, 2024)" },
 	{ "Mac15,13",       "j615ap",  0x32, 0x8122, "MacBook Air (15-inch, M3, 2024)" },
+	{ "Mac16,1",        "j604ap",  0x22, 0x8132, "MacBook Pro (14-inch, M4, Nov 2024)" },
+	{ "Mac16,2",        "j623ap",  0x24, 0x8132, "iMac 24-inch (M4, Two Ports, 2024)" },
+	{ "Mac16,3",        "j624ap",  0x26, 0x8132, "iMac 24-inch (M4, Four Ports, 2024)" },
+	{ "Mac16,5",        "j616cap", 0x06, 0x6041, "MacBook Pro (16-inch, M4 Max, Nov 2024)" },
+	{ "Mac16,6",        "j614cap", 0x04, 0x6041, "MacBook Pro (14-inch, M4 Max, Nov 2024)" },
+	{ "Mac16,7",        "j616sap", 0x06, 0x6040, "MacBook Pro (16-inch, M4 Pro, Nov 2024)" },
+	{ "Mac16,8",        "j614sap", 0x04, 0x6040, "MacBook Pro (14-inch, M4 Pro, Nov 2024)" },
+	{ "Mac16,10",       "j773gap", 0x2A, 0x8132, "Mac mini (M4, 2024)" },
+	{ "Mac16,11",       "j773sap", 0x02, 0x6040, "Mac mini (M4 Pro, 2024)" },
 	/* Apple Silicon VMs (supported by Virtualization.framework on macOS 12) */
 	{ "VirtualMac2,1",  "vma2macosap",  0x20, 0xFE00, "Apple Virtual Machine 1" },
 	/* Apple T2 Coprocessor */
@@ -605,24 +644,6 @@ static libusb_context* irecv_hotplug_ctx = NULL;
 #endif
 #endif
 
-static void _irecv_init(void)
-{
-	char* dbglvl = getenv("LIBIRECOVERY_DEBUG_LEVEL");
-	if (dbglvl) {
-		libirecovery_debug = strtol(dbglvl, NULL, 0);
-		irecv_set_debug_level(libirecovery_debug);
-	}
-#ifndef USE_DUMMY
-#ifndef WIN32
-#ifndef HAVE_IOKIT
-	libusb_init(&libirecovery_context);
-#endif
-#endif
-	collection_init(&listeners);
-	mutex_init(&listener_mutex);
-#endif
-}
-
 static void _irecv_deinit(void)
 {
 #ifndef USE_DUMMY
@@ -639,43 +660,24 @@ static void _irecv_deinit(void)
 #endif
 }
 
-static thread_once_t init_once = THREAD_ONCE_INIT;
-static thread_once_t deinit_once = THREAD_ONCE_INIT;
-
-#ifndef HAVE_ATTRIBUTE_CONSTRUCTOR
-#if defined(__llvm__) || defined(__GNUC__)
-#define HAVE_ATTRIBUTE_CONSTRUCTOR
-#endif
-#endif
-
-#ifdef HAVE_ATTRIBUTE_CONSTRUCTOR
-static void __attribute__((constructor)) libirecovery_initialize(void)
+INITIALIZER(_irecv_init)
 {
-	thread_once(&init_once, _irecv_init);
-}
-
-static void __attribute__((destructor)) libirecovery_deinitialize(void)
-{
-	thread_once(&deinit_once, _irecv_deinit);
-}
-#elif defined(WIN32)
-BOOL WINAPI DllMain(HINSTANCE hModule, DWORD dwReason, LPVOID lpReserved)
-{
-	switch (dwReason) {
-	case DLL_PROCESS_ATTACH:
-		thread_once(&init_once, _irecv_init);
-		break;
-	case DLL_PROCESS_DETACH:
-		thread_once(&deinit_once, _irecv_deinit);
-		break;
-	default:
-		break;
+	char* dbglvl = getenv("LIBIRECOVERY_DEBUG_LEVEL");
+	if (dbglvl) {
+		libirecovery_debug = strtol(dbglvl, NULL, 0);
+		irecv_set_debug_level(libirecovery_debug);
 	}
-	return 1;
-}
-#else
-#warning No compiler support for constructor / destructor attributes, some features might not be available.
+#ifndef USE_DUMMY
+#ifndef _WIN32
+#ifndef HAVE_IOKIT
+	libusb_init(&libirecovery_context);
 #endif
+#endif
+	collection_init(&listeners);
+	mutex_init(&listener_mutex);
+#endif
+	atexit(_irecv_deinit);
+}
 
 #ifdef HAVE_IOKIT
 static int iokit_get_string_descriptor_ascii(irecv_client_t client, uint8_t desc_index, unsigned char * buffer, int size)
@@ -1342,20 +1344,6 @@ static int check_context(irecv_client_t client)
 	return IRECV_E_SUCCESS;
 }
 #endif
-
-void irecv_init(void)
-{
-#ifndef USE_DUMMY
-	thread_once(&init_once, _irecv_init);
-#endif
-}
-
-void irecv_exit(void)
-{
-#ifndef USE_DUMMY
-	thread_once(&deinit_once, _irecv_deinit);
-#endif
-}
 
 #ifndef USE_DUMMY
 #ifdef HAVE_IOKIT
