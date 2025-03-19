@@ -57,7 +57,7 @@ std::string Structure::ToXml() const
     uint32_t length = 0;
     plist_to_xml(_node, &xml, &length);
     std::string ret(xml, xml+length);
-    delete xml;
+    free(xml);
     return ret;
 }
 
@@ -67,7 +67,7 @@ std::vector<char> Structure::ToBin() const
     uint32_t length = 0;
     plist_to_bin(_node, &bin, &length);
     std::vector<char> ret(bin, bin+length);
-    delete bin;
+    free(bin);
     return ret;
 }
 
@@ -117,7 +117,14 @@ Structure* Structure::FromBin(const std::vector<char>& bin)
     plist_from_bin(&bin[0], bin.size(), &root);
 
     return ImportStruct(root);
+}
 
+Structure* Structure::FromBin(const char* bin, uint64_t size)
+{
+    plist_t root = NULL;
+    plist_from_bin(bin, size, &root);
+
+    return ImportStruct(root);
 }
 
 }  // namespace PList
